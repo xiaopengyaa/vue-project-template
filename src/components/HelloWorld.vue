@@ -121,6 +121,9 @@
         default: ''
       }
     },
+    created() {
+      this.$api.test.test()
+    },
     methods: {
       add() {
         let a = 1

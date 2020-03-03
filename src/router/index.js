@@ -1,19 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '@/store'
+import utils from '@/utils'
 
 Vue.use(VueRouter)
 
-// 动态路由引入
-const importRoutesAll = routesContext => {
-  let list = []
-  routesContext.keys().forEach(key => {
-    list = list.concat(routesContext(key).default)
-  })
-  return list
-}
-const routes = importRoutesAll(require.context('./', false, /\.routes\.js$/))
-
+// 动态路由引入（文件命名格式为[fileName].[moduleName].js）
+let routes = []
+const routesObj = utils.importAll(require.context('./', false, /\.routes\.js$/))
+Object.values(routesObj).forEach(list => {
+  routes = routes.concat(list)
+})
 const router = new VueRouter({
   routes
 })

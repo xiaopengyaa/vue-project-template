@@ -6,7 +6,7 @@
 import axios from 'axios'
 import store from '@/store'
 
-// 创建axios 实例
+// 创建axios实例
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_URL, // 数据接口域名统一配置
   timeout: 10000 // 默认超时时间
@@ -15,7 +15,7 @@ const service = axios.create({
 // request拦截器
 service.interceptors.request.use(
   config => {
-    store.dispatch('SET_LOADING', true)
+    store.dispatch('base/SET_LOADING', true)
     return config
   },
   err => {
@@ -26,12 +26,12 @@ service.interceptors.request.use(
 // response拦截器
 service.interceptors.response.use(
   response => {
-    store.dispatch('SET_LOADING', false)
+    store.dispatch('base/SET_LOADING', false)
     return response
   },
   err => {
     const data = err.response.data
-    store.dispatch('SET_LOADING', false)
+    store.dispatch('base/SET_LOADING', false)
     return Promise.reject(data || err)
   }
 )
@@ -46,7 +46,7 @@ const api = {
       })
       return Promise.resolve(res)
     } catch (err) {
-      return Promise.reject(err)
+      console.error(err)
     }
   },
   async post(url, data, config = {}) {
@@ -54,7 +54,7 @@ const api = {
       const res = await service.post(url, data, config)
       return Promise.resolve(res)
     } catch (err) {
-      return Promise.reject(err)
+      console.error(err)
     }
   }
 }
