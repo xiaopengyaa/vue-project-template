@@ -9,7 +9,7 @@ import store from '@/store'
 // 创建axios实例
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_URL, // 数据接口域名统一配置
-  timeout: 10000 // 默认超时时间
+  timeout: 1000 * 10 // 默认超时时间
 })
 
 // request拦截器
